@@ -1,5 +1,5 @@
 # ffmpeg-gif
-An easy tool to convert video.mp4 to gif with with palette gen
+An easy tool to convert video to gif with with palette gen
 
 ## Prerequisite
 ffmpeg
