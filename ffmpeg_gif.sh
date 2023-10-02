@@ -13,22 +13,42 @@ convert_to_gif() {
 
 if [ "$1" = "--all" ]; then
     if [ -z "$2" ]; then
-        echo "Usage: ./ffmpeg_gif.sh --all <input_folder>"
+        echo "Usage: ./ffmpeg_gif.sh --all <input_directory> [-d <output_directory>]"
         exit 1
     fi
 
-    input_folder="$2"
-    for file in "$input_folder"/*.mp4; do
+    if [ "$3" = "-d" ]; then
+        if [ -z "$4" ]; then
+            echo "Usage: ./ffmpeg_gif.sh --all <input_directory> [-d <output_directory>]"
+            exit 1
+        fi
+        output_dir="$4"
+    else
+        output_dir="$2"
+    fi
+
+    if [ ! -d "$output_dir" ]; then
+        mkdir "$output_dir"
+    fi
+
+    input_dir="$2"
+    for file in "$input_dir"/*.mp4; do
         if [ -e "$file" ]; then
             filename="${file%.*}"
-            convert_to_gif "$file" "$filename.gif"
+            
+            if [ -z "$output_dir" ]; then
+                output_file="$filename.gif"
+            else
+                output_file="$output_dir/$(basename "$filename").gif"
+            fi
+            
+            convert_to_gif "$file" "$output_file"
         fi
     done
     exit 0
 elif [ "$1" = "--help" ]; then
-    echo "Usage: ./ffmpeg_gif.sh [--single] <input_file> <output_file>"
-    echo "       ./ffmpeg_gif.sh --all <input_folder>"
-    echo "If --single is not specified, then all mp4 files in the current directory will be converted to gif. All output files will be named <input_file>.gif"
+    echo "Usage: ./ffmpeg_gif.sh <input_file> <output_file>"
+    echo "       ./ffmpeg_gif.sh --all <input_directory> [-d <output_directory>]"
     exit 0
 fi
 
@@ -41,10 +61,3 @@ if [ -n "$1" ]; then
         exit 1
     fi
 fi
-
-for file in *.mp4; do
-    if [ -e "$file" ]; then
-        filename="${file%.*}"
-        convert_to_gif "$file" "$filename.gif"
-    fi
-done
