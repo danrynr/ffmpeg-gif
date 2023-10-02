@@ -9,8 +9,8 @@ bash
 ## Usage
 To convert single file
 
-`./ffmpeg_gif.sh [--single] <input_file> <output_file>`
+`./ffmpeg_gif.sh <input_file> <output_file>`
 
 To convert everything in one directory
 
-`./ffmpeg_gif.sh --all <input_folder>`
+`./ffmpeg_gif.sh --all <input_directory> [-d <output_directory>]`
