@@ -16,3 +16,7 @@ To convert single file
 To convert everything in one directory
 
 `./ffmpeg_gif.sh --all <input_directory> [-d <output_directory>]`
+
+Any additional options can be found here
+
+`./ffmpeg_gif.sh --help`
